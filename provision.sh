@@ -24,7 +24,7 @@ apt-get install -y cowsay
 apt-get install -y sendmail
 
 
-# ---- php, php-fpm, composer
+# ---- php, php-fpm
 
 apt-get install -y php5-cli php5-fpm php5-mysql php5-curl php5-gd php5-mcrypt
 
