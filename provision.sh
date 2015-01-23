@@ -19,6 +19,17 @@ apt-get -y upgrade
 apt-get install -y cowsay
 
 
+# ---- swapfile
+
+dd if=/dev/zero of=/swapfile bs=1024 count=2048k
+mkswap /swapfile
+swapon /swapfile
+echo "/swapfile  none  swap  sw  0  0" >> /etc/fstab
+echo 10 | sudo tee /proc/sys/vm/swappiness
+chown root:root /swapfile
+chmod 0600 /swapfile
+
+
 # ---- sendmail
 
 apt-get install -y sendmail
