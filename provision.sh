@@ -48,6 +48,9 @@ sed -i 's/^zlib.output_compression.*/zlib.output_compression = On/' php.ini
 sed -i 's/^upload_max_filesize.*/upload_max_filesize = 128M/' php.ini
 sed -i 's/^post_max_size.*/post_max_size = 160M/' php.ini
 
+mkdir /sync/phpinfo
+echo "<?php phpinfo( );" > /sync/phpinfo/index.php
+
 
 # ---- mysql
 
@@ -69,7 +72,7 @@ then
 	tar xvfp /sync/.mysql.tgz
 fi
 
-(crontab -l ; echo "*/15 * * * * tar cvfp /sync/.mysql.tgz /var/lib/mysql > /dev/null 2>&1") | crontab -
+(crontab -l ; echo "*/15 * * * * tar cvfp /tmp/.mysql.tgz /var/lib/mysql && mv /tmp/.mysql.tgz /sync > /dev/null 2>&1") | crontab -
 
 
 # ---- redis, php-redis
@@ -78,6 +81,8 @@ apt-get install -y redis-server php5-redis
 
 cd /etc/redis
 sed -i 's/^bind.*/bind 0.0.0.0/' redis.conf
+
+/etc/init.d/redis-server restart
 
 
 # ---- nginx
