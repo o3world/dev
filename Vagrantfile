@@ -3,9 +3,9 @@ Vagrant.configure( "2" ) do |config|
 		v.vm.box = "ubuntu/trusty64"
 		v.vm.provider "virtualbox" do |vb|
 			vb.name = "dev"
-			vb.customize [ "modifyvm", :id, "--memory", "2048" ]
+			vb.customize [ "modifyvm", :id, "--memory", "1024" ]
 			vb.customize [ "modifyvm", :id, "--cpus", "2" ]
-			vb.customize [ "modifyvm", :id, "--cpuexecutioncap", "75" ]
+			vb.customize [ "modifyvm", :id, "--cpuexecutioncap", "50" ]
 		end
 		v.vm.hostname = "vagrant.dev"
 		v.vm.provision "file", source: "nginx.conf", destination: "/tmp/nginx.conf"

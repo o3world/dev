@@ -69,10 +69,12 @@ if [ -f /sync/.mysql.tgz ]
 then
 	cd /
 	rm -rf /var/lib/mysql
-	tar xvfp /sync/.mysql.tgz
+	tar xzfpv /sync/.mysql.tgz
 fi
 
-(crontab -l ; echo "*/15 * * * * tar cvfp /tmp/.mysql.tgz /var/lib/mysql && mv /tmp/.mysql.tgz /sync > /dev/null 2>&1") | crontab -
+(crontab -l ; echo "*/15 * * * * tar czfp /tmp/.mysql.tgz /var/lib/mysql && mv /tmp/.mysql.tgz /sync > /dev/null 2>&1") | crontab -
+
+/etc/init.d/mysql restart
 
 
 # ---- redis, php-redis
