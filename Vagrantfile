@@ -1,13 +1,21 @@
 Vagrant.configure( "2" ) do |config|
 	config.vm.define "dev" do |v|
-		v.vm.box = "ubuntu/trusty64"
+		v.vm.box = "ubuntu/vivid32"
 		v.vm.provider "virtualbox" do |vb|
 			vb.name = "dev"
-			vb.customize [ "modifyvm", :id, "--memory", "1024" ]
-			vb.customize [ "modifyvm", :id, "--cpus", "2" ]
-			vb.customize [ "modifyvm", :id, "--cpuexecutioncap", "50" ]
+			vb.customize [
+				"modifyvm", :id,
+				"--ioapic", "off",
+				"--hwvirtex", "off",
+				"--vtxvpid", "off",
+				"--vtxux", "off",
+				"--nestedpaging", "off",
+				"--memory", "1024",
+				"--vram", "8",
+				"--cpus", "1",
+				"--cpuexecutioncap", "50"
+			]
 		end
-		v.vm.hostname = "vagrant.dev"
 		v.vm.provision "file", source: "nginx.conf", destination: "/tmp/nginx.conf"
 		v.vm.provision "shell", path: "provision.sh"
 		v.vm.boot_timeout = 900
