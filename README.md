@@ -10,8 +10,4 @@ dev
 * Magento
 * Laravel/Lumen
 
-Usage
-=====
-Details coming soon...
-
-`vagrant up`
+[Details here...](http://o3w.in/dev_vm)
