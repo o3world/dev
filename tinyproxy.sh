@@ -5,6 +5,7 @@ then
 	brew install tinyproxy
 	TINYPROXY=/usr/local/Cellar/`/usr/local/sbin/tinyproxy -v|tr ' ' '/'`
 	sed -i '' 's/^Allow 127\.0\.0\.1/#Allow 127\.0\.0\.1/' $TINYPROXY/etc/tinyproxy.conf
+	sed -i '' 's/^Allow 127\.0\.0\.1/#Allow 127\.0\.0\.1/' /usr/local/etc/tinyproxy.conf
 	mkdir -p $TINYPROXY/var/log/tinyproxy
 	mkdir -p $TINYPROXY/var/run/tinyproxy
 fi
