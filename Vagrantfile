@@ -33,5 +33,13 @@ Vagrant.configure( "2" ) do |config|
 				"--cpus", "1",
 				"--cpuexecutioncap", "15"
 			]
+		end
+		v.vm.provision "file", source: "nginx.conf", destination: "/tmp/nginx.conf"
+		v.vm.provision "shell", path: "provision.sh"
+		v.vm.boot_timeout = 900
+		v.vm.network "private_network", ip: "192.168.200.3"
+		v.vm.network "forwarded_port", guest: 80, host: 8080, auto_correct: true
+		v.vm.network "forwarded_port", guest: 8983, host: 8983, auto_correct: true
+		v.vm.network "forwarded_port", guest: 7574, host: 7574, auto_correct: true
 	end
 end
