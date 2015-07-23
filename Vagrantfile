@@ -8,7 +8,7 @@ Vagrant.configure( "2" ) do |config|
 				"--memory", "1024",
 				"--vram", "8",
 				"--cpus", "1",
-				"--cpuexecutioncap", "50"
+				"--cpuexecutioncap", "35"
 			]
 		end
 		v.vm.provision "file", source: "nginx.conf", destination: "/tmp/nginx.conf"
@@ -20,5 +20,18 @@ Vagrant.configure( "2" ) do |config|
 		v.vm.network "forwarded_port", guest: 3306, host: 3306
 		v.vm.network "forwarded_port", guest: 6379, host: 6379
 		v.vm.provision "shell", inline: "echo 'I am ready!' | /usr/games/cowsay -f tux", run: "always"
+	end
+
+	config.vm.define "solr" do |solr|
+		solr.vm.box = "ubuntu/vivid64"
+		v.vm.provider "virtualbox" do |vb2|
+			vb2.name = "solr"
+			vb.customize [
+				"modifyvm", :id,
+				"--memory", "1024",
+				"--vram", "8",
+				"--cpus", "1",
+				"--cpuexecutioncap", "15"
+			]
 	end
 end
