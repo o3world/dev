@@ -12,7 +12,7 @@ Vagrant.configure( "2" ) do |config|
 			]
 		end
 		v.vm.provision "file", source: "nginx.conf", destination: "/tmp/nginx.conf"
-		v.vm.provision "shell", path: "provision.sh"
+		v.vm.provision "shell", path: "provision-dev.sh"
 		v.vm.boot_timeout = 900
 		v.vm.synced_folder ENV[ 'HOME' ] + "/sync", "/sync", type: "nfs", create: true
 		v.vm.network "private_network", ip: "192.168.200.2"
@@ -35,7 +35,7 @@ Vagrant.configure( "2" ) do |config|
 			]
 		end
 		v.vm.provision "file", source: "nginx.conf", destination: "/tmp/nginx.conf"
-		v.vm.provision "shell", path: "provision.sh"
+		v.vm.provision "shell", path: "provision-solr.sh"
 		v.vm.boot_timeout = 900
 		v.vm.network "private_network", ip: "192.168.200.3"
 		v.vm.network "forwarded_port", guest: 80, host: 8080, auto_correct: true
