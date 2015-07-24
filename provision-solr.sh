@@ -11,7 +11,6 @@ dpkg-reconfigure locales
 
 export DEBIAN_FRONTEND=noninteractive
 
-add-apt-repository -y ppa:nginx/stable
 apt-get update
 apt-get -y upgrade
 
@@ -29,21 +28,24 @@ chown root:root /swapfile
 chmod 0600 /swapfile
 
 
-# ---- nginx
-
-mkdir /etc/nginx
-mv /tmp/nginx.conf /etc/nginx/nginx.conf
-apt-get install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" nginx
-
 # ---- solr
 
-# - java jdk
-sudo apt-get -y install openjdk-7-jdk
-mkdir /usr/java
-ln -s /usr/lib/jvm/java-7-openjdk-amd64 /usr/java/default
+# java
+sudo aptitude update
+sudo aptitude install -y solr-jetty default-jdk
 
-# - solr-tomcat
-sudo apt-get -y install solr-tomcat
+# jetty config
+sudo sed -i 's/NO_START=.*/NO_START=0/' /etc/default/jetty8
+sudo sed -i 's/#JETTY_HOST=.*/JETTY_HOST=0.0.0.0/' /etc/default/jetty8
+sudo sed -i 's/#JETTY_PORT=.*/JETTY_PORT=8983/' /etc/default/jetty8
+sudo sed -i 's/#JETTY_PORT=.*/JETTY_PORT=8983/' /etc/default/jetty8
+echo 'JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64' | sudo tee -a /etc/default/jetty8
+
+# solr config
+sudo cp /vagrant/solr-conf/* /etc/solr/conf
+
+sudo service jetty8 restart
+
 
 # ---- post-provision cleanup
 
