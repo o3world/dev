@@ -43,6 +43,9 @@ echo 'JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64' | sudo tee -a /etc/default/je
 
 # solr config
 sudo cp /vagrant/solr-conf/* /etc/solr/conf
+sudo rm /etc/solr/conf/currency.xml
+sudo rm /etc/solr/conf/mapping-FoldToASCII.txt
+sudo rm /etc/solr/conf/admin-extra.html
 
 sudo service jetty8 restart
 
