@@ -1,15 +1,10 @@
 Vagrant.configure( "2" ) do |config|
 	config.vm.define "dev" do |v|
-		v.vm.box = "ubuntu/vivid32"
+		v.vm.box = "ubuntu/vivid64"
 		v.vm.provider "virtualbox" do |vb|
 			vb.name = "dev"
 			vb.customize [
 				"modifyvm", :id,
-				"--ioapic", "off",
-				"--hwvirtex", "off",
-				"--vtxvpid", "off",
-				"--vtxux", "off",
-				"--nestedpaging", "off",
 				"--memory", "1024",
 				"--vram", "8",
 				"--cpus", "1",
