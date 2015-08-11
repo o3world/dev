@@ -11,10 +11,10 @@ dpkg-reconfigure locales
 
 export DEBIAN_FRONTEND=noninteractive
 
-apt-get update
-apt-get -y upgrade
+sudo aptitude update
+sudo aptitude -y upgrade
 
-apt-get install -y cowsay
+sudo aptitude install -y cowsay
 
 
 # ---- swapfile
@@ -31,7 +31,6 @@ chmod 0600 /swapfile
 # ---- solr
 
 # java
-sudo aptitude update
 sudo aptitude install -y solr-jetty default-jdk
 
 # jetty config
@@ -49,9 +48,8 @@ sudo rm /etc/solr/conf/admin-extra.html
 
 sudo service jetty8 restart
 
-
 # ---- post-provision cleanup
 
-apt-get clean
-apt-get autoremove
+sudo aptitude clean
+sudo aptitude autoclean
 rm -rf /tmp/*
