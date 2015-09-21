@@ -32,6 +32,7 @@ chmod 0600 /swapfile
 # ---- sendmail
 
 apt-get install -y sendmail
+apt-get install -y mailutils
 
 
 # ---- php, php-fpm
