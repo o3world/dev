@@ -116,6 +116,10 @@ chmod a+rx /usr/bin/wkhtmltopdf.sh
 ln -s /usr/bin/wkhtmltopdf.sh /usr/local/bin/wkhtmltopdf
 # -- wkhtmltopdf http://www.google.com output.pdf
 
+# --- phantomjs
+apt-get isntall -y phantomjs
+ln -s /usr/bin/phantomjs /usr/local/bin/phantomjs
+
 # ---- post-provision cleanup
 
 apt-get clean
