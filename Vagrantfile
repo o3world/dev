@@ -22,8 +22,8 @@ Vagrant.configure( "2" ) do |config|
 		v.vm.network "forwarded_port", guest: 3307, host: 3307  #if you have mysql installed locally
 		#v.vm.network "forwarded_port", guest: 3306, host: 3306  #mysql
 		v.vm.network "forwarded_port", guest: 5432, host: 5432  #postgres
-		v.vm.network "forwarded_port", guest: 6379, host: 6379  #redis
-		#v.vm.network "forwarded_port", guest: 6380, host: 6380  #redis  #if you have redis installed locally
+		#v.vm.network "forwarded_port", guest: 6379, host: 6379  #redis
+		v.vm.network "forwarded_port", guest: 6380, host: 6380  #redis  #if you have redis installed locally
 		v.vm.provision "shell", inline: "echo 'I am ready!' | /usr/games/cowsay -f tux", run: "always"
 	end
 end

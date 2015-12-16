@@ -94,6 +94,19 @@ sed -i 's/^bind.*/bind 0.0.0.0/' redis.conf
 /etc/init.d/redis-server restart
 
 
+# # ---- wkhtmltopdf
+# apt-get install -y wkhtmltopdf
+# apt-get install -y xvfb
+# echo 'xvfb-run --server-args="-screen 0, 1024x768x24" /usr/bin/wkhtmltopdf $*' > /usr/bin/wkhtmltopdf.sh
+# chmod a+rx /usr/bin/wkhtmltopdf.sh
+# ln -s /usr/bin/wkhtmltopdf.sh /usr/local/bin/wkhtmltopdf
+# # -- wkhtmltopdf http://www.google.com output.pdf
+#
+# # --- phantomjs
+# apt-get install -y phantomjs
+# chmod a+rx /usr/bin/phantomjs
+# ln -s /usr/bin/phantomjs /usr/local/bin/phantomjs
+
 # ---- nginx
 
 mkdir /etc/nginx
@@ -107,18 +120,6 @@ cp dev.crt /vagrant
 mv /tmp/nginx.conf .
 apt-get install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" nginx
 
-
-# ---- wkhtmltopdf
-apt-get install wkhtmltopdf
-apt-get install xvfb
-echo 'xvfb-run --server-args="-screen 0, 1024x768x24" /usr/bin/wkhtmltopdf $*' > /usr/bin/wkhtmltopdf.sh
-chmod a+rx /usr/bin/wkhtmltopdf.sh
-ln -s /usr/bin/wkhtmltopdf.sh /usr/local/bin/wkhtmltopdf
-# -- wkhtmltopdf http://www.google.com output.pdf
-
-# --- phantomjs
-apt-get isntall -y phantomjs
-ln -s /usr/bin/phantomjs /usr/local/bin/phantomjs
 
 # ---- post-provision cleanup
 
