@@ -11,7 +11,6 @@ dpkg-reconfigure locales
 
 export DEBIAN_FRONTEND=noninteractive
 
-add-apt-repository -y ppa:nginx/stable
 apt-get update
 apt-get -y upgrade
 
@@ -36,7 +35,7 @@ apt-get install -y sendmail
 
 # ---- php, php-fpm
 
-apt-get install -y php5-cli php5-fpm php5-mysql php5-curl php5-gd php5-mcrypt
+apt-get install -y php5-cli php5-fpm php5-curl php5-gd php5-mcrypt
 
 cd /etc/php5/cli
 sed -i 's/^;date.timezone.*/date.timezone = America\/New_York/' php.ini
@@ -47,13 +46,17 @@ sed -i 's/^zlib.output_compression.*/zlib.output_compression = On/' php.ini
 sed -i 's/^upload_max_filesize.*/upload_max_filesize = 128M/' php.ini
 sed -i 's/^post_max_size.*/post_max_size = 160M/' php.ini
 
+cd /
+php5enmod mcrypt
+service php5-fpm restart
+
 mkdir /sync/phpinfo
 echo "<?php phpinfo();" > /sync/phpinfo/index.php
 
 
-# ---- mysql
+# ---- mysql, php-mysql
 
-apt-get install -y mysql-client mysql-server
+apt-get install -y mysql-client mysql-server php5-mysql
 
 cd /etc/mysql/mysql.conf.d
 sed -i '/^\[mysqld\].*/aexplicit_defaults_for_timestamp = 1' mysqld.cnf
@@ -67,11 +70,17 @@ mysqladmin -uroot -pvagrant shutdown
 /etc/init.d/mysql restart
 
 
-# ---- postgresql
+# ---- postgres, php-pgsql
 
 apt-get install -y postgresql php5-pgsql
+
 cd /etc/postgresql/`ls /etc/postgresql`/main
 sed -i "/^\#listen_addresses.*/alisten_addresses = '*'" postgresql.conf
+
+sudo -u postgres bash -c "psql -c \"CREATE USER root WITH PASSWORD 'vagrant';\""
+echo "host all root all password" >> pg_hba.conf
+
+/etc/init.d/postgresql restart
 
 
 # ---- redis, php-redis
