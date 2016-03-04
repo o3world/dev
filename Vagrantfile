@@ -13,11 +13,13 @@ Vagrant.configure( "2" ) do |config|
 		end
 		v.vm.hostname = "vagrant.local.dev"
 		v.vm.provision "file", source: "nginx.conf", destination: "/tmp/nginx.conf"
+		v.vm.provision "file", source: "mailcatcher.conf", destination: "/tmp/mailcatcher.conf"
 		v.vm.provision "shell", path: "provision.sh"
 		v.vm.boot_timeout = 900
 		v.vm.synced_folder ENV[ 'HOME' ] + "/sync", "/sync", type: "nfs", create: true
 		v.vm.network "private_network", ip: "192.168.200.2"
 		v.vm.network "forwarded_port", guest: 80, host: 8080, auto_correct: true
+		v.vm.network "forwarded_port", guest: 1080, host: 1080
 		v.vm.network "forwarded_port", guest: 443, host: 8443, auto_correct: true
 		v.vm.network "forwarded_port", guest: 3306, host: 3306  #mysql
 		v.vm.network "forwarded_port", guest: 5432, host: 5432  #postgres

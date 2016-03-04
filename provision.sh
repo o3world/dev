@@ -32,13 +32,19 @@ chmod 0600 /swapfile
 
 apt-get install -y sendmail
 
+# ---- mailcatcher
+apt-get install -y ruby-dev
+apt-get install -y build-essential
+gem install  mailcatcher
 
 # ---- php, php-fpm
+echo "sendmail_path = /usr/bin/env $(which catchmail) -f test@local.dev" | sudo tee /etc/php5/mods-available/mailcatcher.ini
 
 apt-get install -y php5-cli php5-fpm php5-curl php5-gd php5-mcrypt
 
 cd /etc/php5/cli
 sed -i 's/^;date.timezone.*/date.timezone = America\/New_York/' php.ini
+# sed -i 's/sendmail_path*/sendmail_path = \/usr\/bin\/env $(which catchmail) -f test@mailtest.local.dev' php.ini
 
 cd ../fpm
 sed -i 's/^;date.timezone.*/date.timezone = America\/New_York/' php.ini
@@ -47,6 +53,7 @@ sed -i 's/^upload_max_filesize.*/upload_max_filesize = 128M/' php.ini
 sed -i 's/^post_max_size.*/post_max_size = 160M/' php.ini
 
 cd /
+php5enmod mailcatcher
 php5enmod mcrypt
 service php5-fpm restart
 
@@ -106,6 +113,9 @@ cp dev.crt /vagrant
 mv /tmp/nginx.conf .
 apt-get install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" nginx
 
+# ---- Mailcatcher setup
+mv /tmp/mailcatcher.conf /etc/init/
+ln -s /etc/init/mailcatcher.conf /etc/init.d/mailcatcher
 
 # ---- post-provision cleanup
 
