@@ -1,6 +1,6 @@
 Vagrant.configure( "2" ) do |config|
 	config.vm.define "dev" do |v|
-		v.vm.box = "ubuntu/vivid64"
+		v.vm.box = "ubuntu/wily64"
 		v.vm.provider "virtualbox" do |vb|
 			vb.name = "dev"
 			vb.customize [
