@@ -1,7 +1,7 @@
 dev
 ====
 
-**Ubuntu 15.10 LEMP for Vagrant**
+**[Ubuntu 15.10](https://atlas.hashicorp.com/ubuntu/boxes/wily64) LEMP for [Vagrant](https://www.vagrantup.com/)**
 
 Compatible with
 ----------
@@ -15,9 +15,9 @@ Prerequisites
 ----------
 
 * You are running the latest version of macOS
-* You have installed Homebrew
-* You have used `brew install ruby` to install/update Ruby
-* You have installed the latest versions of VirtualBox and Vagrant
+* You have installed [Homebrew](http://brew.sh/)
+* You have used `brew install ruby` to install/update [Ruby](https://www.ruby-lang.org/en/documentation/installation/#homebrew)
+* You have installed the latest versions of [VirtualBox](https://www.virtualbox.org/wiki/Downloads) and [Vagrant](https://www.vagrantup.com/downloads.html)
 * You have NOT already provisioned another Vagrant VM named dev (if so, remove or rename it)
 
 Installation
@@ -70,37 +70,37 @@ This is an optional tool for your host machine.
 * It will map any host name ending in `.local.dev` (or simply `.dev` for now if you are using the Solr branch) to the IP address of the VM
 * You will then not have to “hack” `/etc/hosts` for each new project/site
 
-`sh dnsmasq.sh` will use `brew` to install and configure the Dnsmasq service
+`sh dnsmasq.sh` will use `brew` to install and configure the [Dnsmasq](http://en.wikipedia.org/wiki/Dnsmasq) service
 
 You may still edit `/etc/hosts` at will.
 
 Tinyproxy
 ----------
 
-`sh tinyproxy.sh` will use `brew` to install, configure and run a Tinyproxy server
+`sh tinyproxy.sh` will use `brew` to install, configure and run a [Tinyproxy](http://en.wikipedia.org/wiki/Tinyproxy) server
 
 * A message will display the IP address and port by which your VM may be accessed by any device sharing the same network… with an HTTP Proxy configured on your mobile device at that address, you may test changes to your application using a native browser, instantaneously.
 
 Platform Compatibility Notes
 ----------
 
-* Wordpress
+* [Wordpress](https://wordpress.org/download/)
   - set open permissions for content uploads:  `chmod -R 777 wp-content/uploads` 
-* Drupal
+* [Drupal](https://www.drupal.org/download)
   - to avoid file permissions woes in general:  `chmod -R 777 sites/default` 
-* Magento
+* [Magento](https://www.magentocommerce.com/download)
   - edit `/app/etc/local.xml` to change `session_save` from `[files]` to `[db]` 
-* Laravel / Lumen
+* [Laravel](http://laravel.com/docs/5.1#installation) / [Lumen](http://lumen.laravel.com/docs/installation#install-lumen)
   - `composer` and `artisan` commands should be executed on the host OS
 
 Installed Packages
 ----------
 
-* PHP 5.6 with mysql, pgsql, curl, gd, mcrypt, fpm, redis
-* Nginx 1.6
-* MySQL 5.6
-* PostgreSQL 9.4.4
-* Redis 2.8 — added to mimic behavior of Pantheon instance with Redis enabled sendmail
+* [PHP](http://php.net/ChangeLog-5.php#5.6.4) 5.6 with mysql, pgsql, curl, gd, mcrypt, fpm, redis
+* [Nginx](http://nginx.org/en/CHANGES-1.6) 1.6
+* [MySQL](http://dev.mysql.com/doc/relnotes/mysql/5.6/en/news-5-6-25.html) 5.6
+* [PostgreSQL](http://www.postgresql.org/docs/9.4/static/release-9-4-4.html) 9.4.4
+* [Redis](https://raw.githubusercontent.com/antirez/redis/2.8/00-RELEASENOTES) 2.8 — added to mimic behavior of [Pantheon](https://pantheon.io/) instance with [Redis](https://pantheon.io/docs/articles/sites/redis-as-a-caching-backend/) enabled sendmail
 * cowsay — used to display reassuring `I am ready!` message on boot
 
 PHP
@@ -151,7 +151,7 @@ logging → `/var/log/mysql`
 * `bind-address``= 0.0.0.0` — to allow external access to MySQL
 
   * to connect from host OS:  `mysql -uroot -pvagrant -hvagrant.local.dev` 
-  * or, use Sequel Pro
+  * or, use [Sequel Pro](http://www.sequelpro.com/)
 
 After creating your box, you’ll need to create any databases required for your project. One quick solution is to export the table data from a staging environment (e.g. Pantheon) and import it into a new database.
 
@@ -171,7 +171,7 @@ logging → `/var/log/postgresql`
   * `sudo -u postgres psql` 
   * `CREATE DATABASE``dbname``WITH OWNER = root;`
 
-* manage from host OS with PSequel
+* manage from host OS with [PSequel](http://www.psequel.com/)
   * specify vagrant.local.dev for host
   * use root and vagrant  for username, password
   * remember to specific database name (dbname in above example)
@@ -204,7 +204,7 @@ Note: You can run vm-specific vagrant commands from your host machine by simply 
 **Configure Drupal + apachesolr module**
   1. `vagrant ssh dev` - from the directory that your Vagrantfile is in
   2. Disable the Pantheon apachesolr module in Drupal (feel free to use drush to accomplish this `drush pm-disable -y pantheon_apachesolr`)
-  3. Enable the apachesolr module (`drush en -y apachesolr`)
+  3. Enable the [apachesolr](https://www.drupal.org/project/apachesolr) module (`drush en -y apachesolr`)
   4. Log in to the Drupal admin and navigate to the Apache Solr search settings page `/admin/config/search/apachesolr/settings/solr/edit` 
   5. Set the Solr server URL to `http://192.168.200.3:8983/solr` 
   6. Make sure Read & Write is selected for the Index write access
